@@ -1,54 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Azure Code Anonymizer</title>
-  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-  <!-- Metatag consigliati -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Webapp to anonymize code with Azure patterns, removing sensitive data." />
-  <meta name="keywords" content="azure, code, anonymizer, devops, security" />
-  <meta name="author" content="Azure Code Anonymizer Team" />
+  <head>
+    <meta charset="UTF-8" />
+    <title>Azure Code Anonymizer</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <!-- Metatag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Anonymize your code before sharing or pasting on AI, removing sensitive data and Azure patterns."
+    />
+    <meta name="keywords" content="azure, code, anonymizer, devops, security" />
+    <meta name="author" content="Azure Code Anonymizer Team" />
 
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <header>
-    <h1>Azure Code Anonymizer</h1>
-  </header>
+    <!-- Open Graph Meta Tags -->
+    <meta
+      property="og:url"
+      content="https://silviotorre.github.io/azure-code-anonymizer"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="GitHub - silviotorre/azure-code-anonymizer"
+    />
+    <meta
+      property="og:description"
+      content="Anonymize your code before sharing or pasting on AI, removing sensitive data and Azure patterns."
+    />
+    <meta
+      property="og:image"
+      content="https://repository-images.githubusercontent.com/945555568/fb162530-df33-4c33-adaa-bed4b94e293b"
+    />
+    <meta property="og:image:width" content="1279" />
+    <meta property="og:image:height" content="681" />
 
-  <main>
-    <section>
-      <h2>Paste your code below</h2>
-      <textarea id="codeInput" rows="10" cols="80"></textarea>
-      <br />
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="github.com" />
+    <meta
+      property="twitter:url"
+      content="https://silviotorre.github.io/azure-code-anonymizer"
+    />
+    <meta
+      name="twitter:title"
+      content="GitHub - silviotorre/azure-code-anonymizer"
+    />
+    <meta
+      name="twitter:description"
+      content="Anonymize your code before sharing or pasting on AI, removing sensitive data and Azure patterns."
+    />
+    <meta
+      name="twitter:image"
+      content="https://repository-images.githubusercontent.com/945555568/fb162530-df33-4c33-adaa-bed4b94e293b"
+    />
 
-      <!-- Checkbox per il report -->
-      <input type="checkbox" id="showReport" name="showReport" />
-      <label for="showReport">Show anonymization report</label>
-      <br />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Azure Code Anonymizer</h1>
+    </header>
+    <!-- Disclaimer -->
+    <!-- Intro Message -->
+    <div
+      id="intro-message"
+      style="
+        background: var(--background-dark);
+        color: var(--secondary-color);
+        padding: 15px;
+        text-align: center;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      "
+    >
+      <p style="font-size: small">
+        <strong>Azure Code Anonymizer</strong> is a client-side tool that
+        detects and replaces sensitive information (connection strings, IPs,
+        secrets, etc.) in your code before <i>sharing</i> it (also in AI chat
+        for code review).
+      </p>
+      <button
+        id="open-disclaimer"
+        style="
+          background: var(--accent-color);
+          color: var(--secondary-color);
+          font-size: 16px;
+          font-weight: 700;
+          border: none;
+          padding: 10px 15px;
+          cursor: pointer;
+          border-radius: 5px;
+          transition: background 0.3s ease-in-out;
+        "
+      >
+        Read Disclaimer
+      </button>
+    </div>
 
-      <button id="anonymizeBtn">Anonymize</button>
-    </section>
+    <!-- Popup Modal -->
+    <div
+      id="disclaimer-modal"
+      style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 600px;
+        background: var(--secondary-color);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px var(--shadow-color);
+        z-index: 1000;
+      "
+    >
+      <h2 style="color: var(--primary-color)">
+        ⚠️ Disclaimer – Usage and Liability Limitations
+      </h2>
+      <p>
+        The <strong>Azure Code Anonymizer</strong> is designed to detect and
+        replace sensitive information (e.g., connection strings, IP/MAC
+        addresses, tokens, secrets) within code, reducing the risk of accidental
+        exposure. However, this tool is provided
+        <strong>"as is"</strong> without any explicit or implied warranties, and
+        its use is at the sole discretion of the user.
+      </p>
 
-    <section>
-      <h2>Output</h2>
-      <!-- Textarea di output (readonly) -->
-      <textarea id="output" rows="10" cols="80" readonly></textarea>
-    </section>
+      <h3>📌 Key Points</h3>
+      <ul>
+        <li>
+          <strong>Anonymization ≠ Removal of Intellectual Property</strong
+          ><br />
+          Anonymizing sensitive data does not mean that the code is free from
+          proprietary information. Algorithms, data structures, and proprietary
+          logic may still be identifiable.
+        </li>
 
-    <!-- Sezione report inizialmente nascosta (display:none), appare se checkbox è selezionata -->
-    <section id="reportSection" style="display: none;">
-      <h2>Anonymization Report</h2>
-      <textarea id="report" rows="10" cols="80" readonly></textarea>
-    </section>
-  </main>
+        <li>
+          <strong>No Data Storage or Transmission</strong><br />
+          All processing occurs client-side in the browser.<br />
+          No data is sent to or stored on external servers.
+        </li>
 
-  <footer>
-    <p>Azure Code Anonymizer - Version 1</p>
-  </footer>
+        <li>
+          <strong>Use at Your Own Risk</strong><br />
+          The user is fully responsible for reviewing the anonymized code before
+          sharing.<br />
+          The development team is not liable for any intellectual property
+          violations or security risks resulting from the use of this tool.
+        </li>
 
-  <script src="js/utils.js"></script>
-  <script src="js/main.js"></script>
-</body>
+        <li>
+          <strong>Risk Assessment Recommendation</strong><br />
+          Before sharing anonymized code with third-party tools, a risk
+          assessment is strongly recommended.<br />
+          For highly sensitive or proprietary code, anonymization may not be
+          sufficient, and additional precautions should be taken.
+        </li>
+      </ul>
+
+      <p>
+        <strong>ℹ️ Note:</strong><br />
+        This tool is provided <strong>“as is”</strong>, without any guarantee of
+        suitability for a particular purpose. By using it, you agree to these
+        terms.
+      </p>
+
+      <button
+        id="close-disclaimer"
+        style="
+          background: var(--primary-color);
+          color: var(--secondary-color);
+          font-size: 14px;
+          font-weight: 700;
+          border: none;
+          padding: 8px 12px;
+          cursor: pointer;
+          border-radius: 5px;
+          margin-top: 15px;
+          display: block;
+          width: 100px;
+          margin-left: auto;
+          margin-right: auto;
+        "
+      >
+        Close
+      </button>
+    </div>
+
+    <!-- Background Overlay -->
+    <div
+      id="overlay"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      "
+    ></div>
+
+    <!-- JavaScript for Modal -->
+    <script>
+      document
+        .getElementById("open-disclaimer")
+        .addEventListener("click", function () {
+          document.getElementById("disclaimer-modal").style.display = "block";
+          document.getElementById("overlay").style.display = "block";
+        });
+
+      document
+        .getElementById("close-disclaimer")
+        .addEventListener("click", function () {
+          document.getElementById("disclaimer-modal").style.display = "none";
+          document.getElementById("overlay").style.display = "none";
+        });
+
+      document.getElementById("overlay").addEventListener("click", function () {
+        document.getElementById("disclaimer-modal").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+      });
+    </script>
+
+    <main>
+      <section>
+        <h2>Paste your code below</h2>
+        <textarea id="codeInput" rows="10" cols="80"></textarea>
+        <br />
+
+        <button id="anonymizeBtn">Anonymize</button>
+
+        <!-- Checkbox per il report -->
+        <input type="checkbox" id="showReport" name="showReport" />
+        <label for="showReport">Show anonymization report</label>
+        <br />
+      </section>
+
+      <section>
+        <h2>Output</h2>
+        <!-- Textarea di output (readonly) -->
+        <textarea id="output" rows="10" cols="80" readonly></textarea>
+      </section>
+
+      <!-- Sezione report inizialmente nascosta (display:none), appare se checkbox è selezionata -->
+      <section id="reportSection" style="display: none">
+        <h2>Anonymization Report</h2>
+        <textarea id="report" rows="10" cols="80" readonly></textarea>
+      </section>
+    </main>
+
+    <footer>
+      <p>Azure Code Anonymizer - Version 1</p>
+    </footer>
+
+    <script src="js/utils.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>
