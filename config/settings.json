@@ -1,1 +1,7 @@
- 
+{
+    "loggingEnabled": true,
+    "language": "en-US",
+    "theme": "light",
+    "appVersion": "1.0.0"
+  }
+  

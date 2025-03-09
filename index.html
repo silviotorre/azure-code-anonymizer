@@ -1,1 +1,40 @@
- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Azure Code Anonymizer</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Azure Code Anonymizer</h1>
+  </header>
+
+  <main>
+    <section>
+      <h2>Paste your code below</h2>
+      <textarea id="codeInput" rows="10" cols="80"></textarea>
+      <br />
+      <button id="anonymizeBtn">Anonymize</button>
+    </section>
+
+    <section>
+      <h2>Output</h2>
+      <pre id="output"></pre>
+    </section>
+
+    <!-- Nuova sezione dedicata al report di anonimizzazione -->
+    <section>
+      <h2>Anonymization Report</h2>
+      <pre id="report"></pre>
+    </section>
+  </main>
+
+  <footer>
+    <p>Azure Code Anonymizer - Version 1</p>
+  </footer>
+
+  <script src="js/utils.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
