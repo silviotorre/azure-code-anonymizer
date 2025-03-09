@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <title>Azure Code Anonymizer</title>
+  <!-- Metatag consigliati -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Webapp to anonymize code with Azure patterns, removing sensitive data." />
+  <meta name="keywords" content="azure, code, anonymizer, devops, security" />
+  <meta name="author" content="Azure Code Anonymizer Team" />
+
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -15,18 +21,25 @@
       <h2>Paste your code below</h2>
       <textarea id="codeInput" rows="10" cols="80"></textarea>
       <br />
+
+      <!-- Checkbox per il report -->
+      <input type="checkbox" id="showReport" name="showReport" />
+      <label for="showReport">Show anonymization report</label>
+      <br />
+
       <button id="anonymizeBtn">Anonymize</button>
     </section>
 
     <section>
       <h2>Output</h2>
-      <pre id="output"></pre>
+      <!-- Textarea di output (readonly) -->
+      <textarea id="output" rows="10" cols="80" readonly></textarea>
     </section>
 
-    <!-- Nuova sezione dedicata al report di anonimizzazione -->
-    <section>
+    <!-- Sezione report inizialmente nascosta (display:none), appare se checkbox è selezionata -->
+    <section id="reportSection" style="display: none;">
       <h2>Anonymization Report</h2>
-      <pre id="report"></pre>
+      <textarea id="report" rows="10" cols="80" readonly></textarea>
     </section>
   </main>
 
