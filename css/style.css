@@ -1,1 +1,127 @@
- 
+ /* Import Roboto Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+:root {
+    /* Color Palette (Extracted from the Image) */
+    --primary-color: #2c3e50;  /* Dark blue-gray */
+    --secondary-color: #ffffff; /* White */
+    --accent-color: #00a8ff;  /* Light Azure Blue */
+    --background-light: #ecf0f1; /* Light Gray */
+    --background-dark: #34495e; /* Darker Blue-Gray */
+    --text-color: #333; /* General text color */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Body */
+body {
+    background: var(--background-light);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    text-align: center;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: 700;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Main Content */
+main {
+    max-width: 800px;
+    margin: auto;
+    background: var(--secondary-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+/* Sections */
+section {
+    margin-bottom: 20px;
+}
+
+/* Labels */
+label {
+    font-weight: 400;
+    color: var(--primary-color);
+}
+
+/* Textarea */
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    font-size: 16px;
+    background: var(--background-light);
+    color: var(--text-color);
+    transition: all 0.2s ease-in-out;
+}
+
+textarea:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 5px var(--accent-color);
+}
+
+/* Buttons */
+button {
+    background: var(--accent-color);
+    color: var(--secondary-color);
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease-in-out, transform 0.1s ease-in-out;
+}
+
+button:hover {
+    background: var(--primary-color);
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Checkbox Styling */
+input[type="checkbox"] {
+    accent-color: var(--accent-color);
+    transform: scale(1.2);
+    margin-right: 5px;
+}
+
+/* Report Section */
+#reportSection {
+    display: none;
+    background: var(--background-dark);
+    padding: 15px;
+    border-radius: 5px;
+    color: var(--secondary-color);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
