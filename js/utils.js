@@ -1,53 +1,57 @@
-(() => {
-    'use strict';
-  
-    // Elementi dell'interfaccia
-    const codeInput = document.getElementById('codeInput');
-    const anonymizeBtn = document.getElementById('anonymizeBtn');
-    const output = document.getElementById('output');
-  
-    // Per mostrare un eventuale report in un div / pre (aggiungilo in index.html se vuoi)
-    // Esempio:
-    // <section>
-    //   <h2>Anonymization Report</h2>
-    //   <pre id="report"></pre>
-    // </section>
-    const reportEl = document.getElementById('report');
-  
-    let anonymizerRules = [];
-    let appSettings = {};
-  
-    window.addEventListener('DOMContentLoaded', async () => {
-      try {
-        anonymizerRules = await fetchJSON('config/anonymizer-rules.json');
-        appSettings = await fetchJSON('config/settings.json');
-        console.log('Anonymizer rules loaded:', anonymizerRules);
-        console.log('Settings loaded:', appSettings);
-      } catch (err) {
-        console.error('Error loading config files:', err);
+// utils.js
+'use strict';
+
+const counters = {};
+
+function getNextCounter(patternId) {
+  if (!counters[patternId]) counters[patternId] = 0;
+  counters[patternId]++;
+  return counters[patternId];
+}
+
+/**
+ * Anonymize text line by line, returning both the anonymized text and a report.
+ */
+function anonymizeTextWithReport(text, rules) {
+  // Reset counters a ogni chiamata
+  Object.keys(counters).forEach(k => delete counters[k]);
+
+  const lines = text.split('\n');
+  const report = [];
+
+  const processedLines = lines.map((line, lineIndex) => {
+    let processedLine = line;
+
+    rules.forEach(rule => {
+      const regex = new RegExp(rule.pattern, 'g');
+      let match;
+      while ((match = regex.exec(processedLine)) !== null) {
+        const matchedValue = match[0];
+        const currentCount = getNextCounter(rule.id);
+        const replacement = rule.replacement.replace('{counter}', currentCount);
+
+        const before = processedLine.slice(0, match.index);
+        const after = processedLine.slice(match.index + matchedValue.length);
+        processedLine = before + replacement + after;
+
+        // Teniamo traccia nel report
+        report.push({
+          line: lineIndex + 1,
+          patternId: rule.id,
+          original: matchedValue,
+          replaced: replacement
+        });
+
+        // aggiorniamo l'indice per continuare la ricerca dopo la sostituzione
+        regex.lastIndex = match.index + replacement.length;
       }
     });
-  
-    anonymizeBtn.addEventListener('click', () => {
-      const originalText = codeInput.value;
-      // Chiamiamo la funzione che gestisce la sostituzione riga per riga
-      const { anonymizedText, report } = anonymizeTextWithReport(originalText, anonymizerRules);
-  
-      output.textContent = anonymizedText;
-  
-      // Se vuoi mostrare il report
-      if (reportEl) {
-        reportEl.textContent = JSON.stringify(report, null, 2);
-      }
-    });
-  
-    async function fetchJSON(url) {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
-      }
-      return response.json();
-    }
-  
-  })();
-  
+
+    return processedLine;
+  });
+
+  return { anonymizedText: processedLines.join('\n'), report };
+}
+
+// Rendi globali le due funzioni (per poterle usare in main.js)
+window.anonymizeTextWithReport = anonymizeTextWithReport;
