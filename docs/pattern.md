@@ -91,6 +91,63 @@ Questo documento descrive i principali pattern che intendiamo sostituire per ano
 
 - Aggiungere nuove entry all’occorrenza per gestire token o formati specifici di un progetto.
 
+### 13. Azure DevOps Service Connection
+
+- **Regex**: `serviceConnection\s*:\s*['"]([\w\.-]+)['"]`
+- **Descrizione**: Cattura riferimenti del tipo `serviceConnection: 'myServiceConn'` in uno YAML.  
+- **Sostituzione**: `__SERVICE_CONN_{COUNTER}__`
+
+### 14. Azure DevOps Variable Group
+
+- **Regex**: `group\s*:\s*['"]([\w\.-]+)['"]`
+- **Descrizione**: Cattura riferimenti del tipo `group: 'myVariableGroup'` in uno YAML di pipeline.  
+- **Sostituzione**: `__VARIABLE_GROUP_{COUNTER}__`
+
+### 15. Azure DevOps Secret (forma $(mySecret))
+
+- **Regex**: `\$\(\w+\)`
+- **Descrizione**: Cattura riferimenti a variabili segrete in forma `$(mySecretVar)`.  
+- **Sostituzione**: `__AZDEVOPS_SECRET_{COUNTER}__`
+
+### 16. Azure DevOps Agent Pool
+
+- **Regex**: `pool\s*:\s*['"]([\w\.-]+)['"]`
+- **Descrizione**: Cattura riferimenti del tipo `pool: 'MyAgentPool'`.  
+- **Sostituzione**: `__AGENT_POOL_{COUNTER}__`
+### 17. Azure RBAC References
+
+Nei template o nei file YAML/Pipeline, potremmo incontrare riferimenti a RBAC (Role-Based Access Control).  
+Ad esempio:
+
+- **roleDefinitionId**: path verso la definizione del ruolo (spesso include un GUID)  
+- **roleAssignmentName**: nome simbolico di una role assignment  
+- **principalId**: GUID dell’utente/entità di sicurezza a cui assegnare il ruolo  
+- **scope**: path della risorsa (subscription, resource group, ecc.)
+
+Di seguito alcune regex di base; occorre adattarle se i formati cambiano.
+
+1. **roleDefinitionId**  
+   - **Regex**: `roleDefinitionId\s*:\s*['"][^'"]+['"]`  
+   - **Sostituzione**: `__RBAC_ROLEDEF_{counter}__`  
+   - Descrizione: intercetta una riga tipo `roleDefinitionId: "/subscriptions/<GUID>/providers/Microsoft.Authorization/roleDefinitions/<GUID>"`.
+
+2. **roleAssignmentName**  
+   - **Regex**: `roleAssignmentName\s*:\s*['"][^'"]+['"]`  
+   - **Sostituzione**: `__RBAC_ROLEASSIGN_{counter}__`  
+   - Descrizione: nome arbitrario assegnato alla role assignment, spesso visibile in un file di configurazione.
+
+3. **principalId**  
+   - **Regex**: `principalId\s*:\s*['"]([0-9a-fA-F-]+)['"]`  
+   - **Sostituzione**: `__RBAC_PRINCIPAL_{counter}__`  
+   - Descrizione: GUID di un utente, gruppo, o Service Principal.
+
+4. **scope**  
+   - **Regex**: `scope\s*:\s*['"][^'"]+['"]`  
+   - **Sostituzione**: `__RBAC_SCOPE_{counter}__`  
+   - Descrizione: può indicare un path come `/subscriptions/<GUID>/resourceGroups/<myRG>` o simili.
+
+> *Attenzione*: i formati di ARM/Bicep possono variare. Se i valori sono su più righe, o se i doppi apici sono sostituiti da singoli, potresti dover adattare la regex.  
+
 ---
 
 ## Note generali

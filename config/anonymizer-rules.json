@@ -26,7 +26,7 @@
     },
     {
       "id": "PAT_TOKEN",
-      "pattern": "(?<=[:=]|^)[A-Za-z0-9_]{20,}",
+      "pattern": "[A-Za-z0-9_]{20,}",
       "replacement": "__PAT_{counter}__"
     },
     {
@@ -48,6 +48,51 @@
       "id": "KEYVAULT_SECRET",
       "pattern": "@Microsoft\\.KeyVault\\(SecretUri=.*?\\)",
       "replacement": "__KEYVAULT_SECRET_{counter}__"
-    }
+    },
+    {
+      "id": "CERT_BLOCK",
+      "pattern": "-----BEGIN CERTIFICATE-----[\\s\\S]*?-----END CERTIFICATE-----",
+      "replacement": "__CERT_{counter}__"
+    },
+    {
+      "id": "SERVICE_CONNECTION",
+      "pattern": "serviceConnection\\s*:\\s*['\"]([\\w\\.-]+)['\"]",
+      "replacement": "__SERVICE_CONN_{counter}__"
+    },
+    {
+      "id": "VARIABLE_GROUP",
+      "pattern": "group\\s*:\\s*['\"]([\\w\\.-]+)['\"]",
+      "replacement": "__VARIABLE_GROUP_{counter}__"
+    },
+    {
+      "id": "AZDEVOPS_SECRET",
+      "pattern": "\\$\\(\\w+\\)",
+      "replacement": "__AZDEVOPS_SECRET_{counter}__"
+    },
+    {
+      "id": "AGENT_POOL",
+      "pattern": "pool\\s*:\\s*['\"]([\\w\\.-]+)['\"]",
+      "replacement": "__AGENT_POOL_{counter}__"
+    },
+    {
+      "id": "RBAC_ROLEDEF",
+      "pattern": "roleDefinitionId\\s*:\\s*['\"][^'\"]+['\"]",
+      "replacement": "__RBAC_ROLEDEF_{counter}__"
+    },
+    {
+      "id": "RBAC_ROLEASSIGN",
+      "pattern": "roleAssignmentName\\s*:\\s*['\"][^'\"]+['\"]",
+      "replacement": "__RBAC_ROLEASSIGN_{counter}__"
+    },
+    {
+      "id": "RBAC_PRINCIPAL",
+      "pattern": "principalId\\s*:\\s*['\"]([0-9a-fA-F-]+)['\"]",
+      "replacement": "__RBAC_PRINCIPAL_{counter}__"
+    },
+    {
+      "id": "RBAC_SCOPE",
+      "pattern": "scope\\s*:\\s*['\"][^'\"]+['\"]",
+      "replacement": "__RBAC_SCOPE_{counter}__"
+    }    
   ]
   
