@@ -1,4 +1,7 @@
 # 🔒 Azure Code Anonymizer
+![GitHub stars](https://img.shields.io/github/stars/silviotorre/azure-code-anonymizer?style=social)
+![GitHub issues](https://img.shields.io/github/issues/silviotorre/azure-code-anonymizer)
+![GitHub license](https://img.shields.io/github/license/silviotorre/azure-code-anonymizer)
 
 **Azure Code Anonymizer** is a web-based tool designed to detect and replace sensitive information within code snippets, particularly in **Azure and DevOps environments**. It enables developers and DevOps engineers to **securely share code** for debugging and analysis by anonymizing **connection strings, tokens, secrets, and identity-related data** before exposing it externally.
 # ⚠️ Disclaimer – Usage and Liability Limitations
