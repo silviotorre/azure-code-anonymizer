@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+
+# Blocca immagini, favicon e manifest
+Disallow: /docs/images/
+
+# Blocca file di configurazione
+Disallow: /config/
+Disallow: /config/*
+Disallow: /*.json
+Disallow: /*.yaml
+Disallow: /*.yml
+Disallow: /*.xml
+Disallow: /*.config
+Disallow: /*.gitkeep
+Disallow: /*.gitignore
+Disallow: /*.manifest
+
+# Blocca i file JavaScript
+Disallow: /js/
+Disallow: /js/*
+
+# Blocca cartelle di workflow GitHub
+Disallow: /.github/
+Disallow: /.github/workflows/
+
+# Indica la sitemap 
+Sitemap: https://silviotorre.github.io/sitemap.xml
