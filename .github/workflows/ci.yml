@@ -1,1 +1,17 @@
- 
+ name: CI Placeholder
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  no-op:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CI Checks Passed
+        run: echo "No build or tests required. GitHub Pages updates automatically."
+
