@@ -1,4 +1,4 @@
-name: CI Placeholder
+name: CI Ops
 
 on:
   push:
